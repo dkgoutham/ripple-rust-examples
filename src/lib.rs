@@ -1,5 +1,6 @@
 pub mod client;
 pub mod error;
+pub mod offline_signing;
 pub mod transactions;
 pub mod verification;
 
@@ -29,6 +30,7 @@ impl XRPLManager {
         Ok(Self { client })
     }
 
+    // Part 1 functionality
     pub async fn send_xrp(
         &self,
         user1_secret: &str,
@@ -89,6 +91,51 @@ impl XRPLManager {
             currency_code,
         )
         .await
+    }
+
+    // Part 2 functionality - True offline signing
+    pub async fn gather_transaction_params(&self, account_address: &str) -> Result<offline_signing::OfflineTransactionParams> {
+        offline_signing::gather_transaction_params(&self.client, account_address).await
+    }
+
+    pub fn offline_sign_transaction(
+        user_secret: &str,
+        to_address: &str,
+        amount: xrpl::models::Amount<'static>,
+        params: offline_signing::OfflineTransactionParams,
+    ) -> Result<String> {
+        offline_signing::offline_sign_transaction(user_secret, to_address, amount, params)
+    }
+
+    pub async fn submit_signed_blob(&self, signed_blob: &str) -> Result<String> {
+        offline_signing::submit_signed_blob(&self.client, signed_blob).await
+    }
+
+    // High-level workflows
+    pub async fn offline_xrp_workflow(
+        &self,
+        offline_client: &XRPLManager,
+        user_secret: &str,
+        to_address: &str,
+        amount_drops: u64,
+    ) -> Result<String> {
+        offline_signing::offline_xrp_workflow(&self.client, &offline_client.client, user_secret, to_address, amount_drops).await
+    }
+
+    pub async fn offline_token_workflow(
+        &self,
+        offline_client: &XRPLManager,
+        user_secret: &str,
+        to_address: &str,
+        currency_code: &str,
+        amount: &str,
+    ) -> Result<String> {
+        offline_signing::offline_token_workflow(&self.client, &offline_client.client, user_secret, to_address, currency_code, amount).await
+    }
+
+    // Utility to create a second connection
+    pub async fn create_second_connection() -> Result<XRPLManager> {
+        Self::new_testnet().await
     }
 }
 
