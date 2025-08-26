@@ -23,13 +23,13 @@ pub async fn send_xrp(
     amount_drops: u64,
 ) -> Result<String> {
     println!("Preparing XRP transfer...");
-    println!("\nFrom seed: {}...", &user1_secret[..8]);
-    println!("\nTo address: {}", user2_address);
-    println!("\nAmount: {} drops", amount_drops);
+    println!("  From seed: {}...", &user1_secret[..8]);
+    println!("  To address: {}", user2_address);
+    println!("  Amount: {} drops", amount_drops);
 
     let wallet =
         Wallet::new(user1_secret, 0).map_err(|e| anyhow::anyhow!("Wallet error: {:?}", e))?;
-    println!("\nFrom address: {}", wallet.classic_address);
+    println!("From address: {}", wallet.classic_address);
 
     let xrp_amount = XRPAmount(Cow::Owned(amount_drops.to_string()));
 
@@ -67,8 +67,8 @@ pub async fn send_xrp(
         .to_string();
 
     println!("XRP transaction submitted successfully!");
-    println!("\nTransaction hash: {}", tx_hash);
-    println!("\nEngine result: {}", result.engine_result);
+    println!("Transaction hash: {}", tx_hash);
+    println!("Engine result: {}", result.engine_result);
     Ok(tx_hash)
 }
 
@@ -80,14 +80,14 @@ pub async fn setup_trustline(
     limit: &str,
 ) -> Result<String> {
     println!("Setting up trustline...");
-    println!("\nUser seed: {}...", &user_secret[..8]);
-    println!("\nIssuer: {}", issuer_address);
-    println!("\nCurrency: {}", currency_code);
-    println!("\nLimit: {}", limit);
+    println!("  User seed: {}...", &user_secret[..8]);
+    println!("  Issuer: {}", issuer_address);
+    println!("  Currency: {}", currency_code);
+    println!("  Limit: {}", limit);
 
     let wallet =
         Wallet::new(user_secret, 0).map_err(|e| anyhow::anyhow!("Wallet error: {:?}", e))?;
-    println!("\nUser address: {}", wallet.classic_address);
+    println!("User address: {}", wallet.classic_address);
 
     let limit_amount = IssuedCurrencyAmount::new(
         Cow::Owned(currency_code.to_string()),
@@ -125,8 +125,8 @@ pub async fn setup_trustline(
         .to_string();
 
     println!("Trustline transaction submitted successfully!");
-    println!("\nTransaction hash: {}", tx_hash);
-    println!("\nEngine result: {}", result.engine_result);
+    println!("  Transaction hash: {}", tx_hash);
+    println!("  Engine result: {}", result.engine_result);
     Ok(tx_hash)
 }
 
@@ -138,14 +138,14 @@ pub async fn send_issued_token(
     amount: &str,
 ) -> Result<String> {
     println!("Preparing issued token transfer...");
-    println!("\nIssuer seed: {}...", &issuer_secret[..8]);
-    println!("\nTo address: {}", user_address);
-    println!("\nCurrency: {}", currency_code);
-    println!("\nAmount: {}", amount);
+    println!("  Issuer seed: {}...", &issuer_secret[..8]);
+    println!("  To address: {}", user_address);
+    println!("  Currency: {}", currency_code);
+    println!("  Amount: {}", amount);
 
     let wallet =
         Wallet::new(issuer_secret, 0).map_err(|e| anyhow::anyhow!("Wallet error: {:?}", e))?;
-    println!("\nIssuer address: {}", wallet.classic_address);
+    println!("Issuer address: {}", wallet.classic_address);
 
     let issued_amount = IssuedCurrencyAmount::new(
         Cow::Owned(currency_code.to_string()),
@@ -187,7 +187,7 @@ pub async fn send_issued_token(
         .to_string();
 
     println!("Issued token transaction submitted successfully!");
-    println!("\nTransaction hash: {}", tx_hash);
-    println!("\nEngine result: {}", result.engine_result);
+    println!("  Transaction hash: {}", tx_hash);
+    println!("  Engine result: {}", result.engine_result);
     Ok(tx_hash)
 }

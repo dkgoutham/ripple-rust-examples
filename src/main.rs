@@ -27,6 +27,8 @@ async fn main() -> Result<()> {
     // Create XRPL manager
     let xrpl = XRPLManager::new_testnet().await?;
 
+    println!("=====================================");
+
     // Demo 1: XRP Transfer
     println!("\n1: XRP Transfer");
     println!(".....................");
@@ -36,6 +38,8 @@ async fn main() -> Result<()> {
     println!("\nWaiting 10 seconds for transaction to settle...");
     sleep(Duration::from_secs(10)).await;
 
+    println!("=====================================");
+
     // Demo 2: Issued Token Transfer
     println!("\n2: Issued Token Transfer");
     println!(".......................");
@@ -44,6 +48,8 @@ async fn main() -> Result<()> {
 
     println!("\nWaiting 10 seconds for transaction to settle...");
     sleep(Duration::from_secs(10)).await;
+
+    println!("=====================================");
 
     // Demo 3: Offline Signing
     println!("\n3: Offline Signing & Submission");

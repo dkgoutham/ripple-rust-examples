@@ -18,14 +18,14 @@ pub async fn verify_transfer(
     currency_code: Option<&str>,
 ) -> Result<bool> {
     println!("Verifying transfer...");
-    println!("\nTransaction: {}", tx_hash);
-    println!("\nExpected from: {}", expected_from);
-    println!("\nExpected to: {}", expected_to);
-    println!("\nExpected amount: {}", expected_amount);
+    println!("  Transaction: {}", tx_hash);
+    println!("  Expected from: {}", expected_from);
+    println!("  Expected to: {}", expected_to);
+    println!("  Expected amount: {}", expected_amount);
     if let Some(currency) = currency_code {
-        println!("\nExpected currency: {}", currency);
+        println!("  Expected currency: {}", currency);
     } else {
-        println!("\nExpected currency: XRP");
+        println!("  Expected currency: XRP");
     }
 
     let tx_result = client::get_transaction(client, tx_hash).await?;
