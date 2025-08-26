@@ -4,3 +4,12 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+xrpl-rust = "1.0.0"
+tokio = { version = "1.0", features = ["full"] }
+serde_json = "1.0"
+anyhow = "1.0"
+url = "2.0"
+dotenvy = "0.15.7"
+
+[dev-dependencies]
+tokio-test = "0.4"
